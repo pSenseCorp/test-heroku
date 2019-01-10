@@ -102,7 +102,7 @@ public class Main {
   String getContacts(Map<String, Object> model) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      ResultSet rs = stmt.executeQuery("Select Name, Phone from Contact");
+      ResultSet rs = stmt.executeQuery("Select Name, Phone from salesforce.contact");
 
       ArrayList<String> output = new ArrayList<String>();
       while (rs.next()) {
