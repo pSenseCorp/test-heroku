@@ -97,5 +97,24 @@ public class Main {
       model.put("science", "E=mc^2: 12 GeV = " + m.toString());
       return "hello";
   }
+  
+  @RequestMapping("/getContacts")
+  String getContacts(Map<String, Object> model) {
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("Select Name, Phone from Contact");
+
+      ArrayList<String> output = new ArrayList<String>();
+      while (rs.next()) {
+        output.add("Read from Contact: " + rs.getString("Name"));
+      }
+
+      model.put("records", output);
+      return "db";
+    } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
 
 }
